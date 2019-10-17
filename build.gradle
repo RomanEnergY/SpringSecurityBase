@@ -1,0 +1,49 @@
+buildscript { // уточнение build
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.8.RELEASE")
+    }
+}
+// далее подключение плагинов, но с последних версий лучше подключать плагины через apply plugin
+// стандартное подключение плагинов
+//plugins {
+//    id 'java'
+//}
+// подключение плагинов через apply plugin
+apply plugin: 'java' // выбран язык программирования
+apply plugin: 'idea' // для лучшей интеграции idea с gradle
+apply plugin: 'application' // создаем приложение
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'SpringTest'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8 // проверка версии
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+    // Библиотеки для запуска Hello World на Spring
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-tomcat")
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.16'
+    compile group: 'javax.servlet.jsp.jstl', name: 'jstl', version: '1.2' // работаем с jstl - старая бибилиотека для фронта, чтоб можно было интегрировать java код с фронтендом, она удобна для обучения тем что не нужно прямо сейчас поднимать отдельный веб-сервер
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // Библиотеки для работы базой данных
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.9.RELEASE' // библиотека jdbc
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8' // библиотека двайвер postgresql
+
+    // Библиотеки для работы spring-security
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.2.0.RELEASE' // spring-security-core
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.0.RELEASE' // spring-security-web
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.0.RELEASE' // spring-security-config
+}
